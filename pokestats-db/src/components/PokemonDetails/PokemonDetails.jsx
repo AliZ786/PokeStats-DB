@@ -7,12 +7,12 @@ const P = new Pokedex();
 const TYPES = [
   { name: "normal", color: "#FFE4C4", textColor: "#000000" },
   { name: "fire", color: "#FF6347", textColor: "#FFFFFF" },
-  { name: "water", color: "#00FFFF", textColor: "#FFFFF" },
-  { name: "grass", color: "#808000", textColor: "#FFFFF" },
+  { name: "water", color: "#00FFFF", textColor: "#FFFFFF" },
+  { name: "grass", color: "#808000", textColor: "#FFFFFF" },
   { name: "electric", color: "#FFFF00", textColor: "#000000" },
   { name: "ice", color: "#87CEEB", textColor: "#000000" },
   { name: "fighting", color: "#8B0000", textColor: "#FFFFFF" },
-  { name: "poison", color: "#191970", textColor: "#000000" },
+  { name: "poison", color: "#191970", textColor: "#FFFFFF" },
   { name: "ground", color: "#F0E68C", textColor: "#000000" },
   { name: "flying", color: "#AFEEEE", textColor: "#000000" },
   { name: "psychic", color: "#FF00FF", textColor: "#FFFFFF" },
@@ -22,7 +22,7 @@ const TYPES = [
   { name: "dark", color: "#000000", textColor: "#FFFFFF" },
   { name: "dragon", color: "#00008B", textColor: "#FFFFFF" },
   { name: "steel", color: "#7FFFD4", textColor: "#000000" },
-  { name: "fairy", color: "#48D1CC", textColor: "#FFFFFF" },
+  { name: "fairy", color: "#FFC1CC", textColor: "#FFFFFF" },
 ];
 
 function PokemonDetails() {
@@ -40,6 +40,7 @@ function PokemonDetails() {
         setPokemonData(response);
       })
       .catch((error) => {
+        setPokemonData(null);
         setError("This Pokemon does not exist");
         console.log("Error:", error);
       });
@@ -82,7 +83,7 @@ function PokemonDetails() {
           </div>
         </div>
       ) : (
-        error && <h3>{error}</h3>
+        <div>{error && <h3 className="error-message">{error}</h3>}</div>
       )}
     </div>
   );
