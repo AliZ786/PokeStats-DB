@@ -6,9 +6,14 @@ h1 {
 }
 
 /* Classes */
+
+.pokemon-name {
+  font-family: "Pokemon Solid", sans-serif;
+  font-size: 20px;
+}
+
 .type-button {
   font-family: "Coiny", sans-serif;
-  color: grey;
   border-radius: 20px;
   border: none;
   font-size: 20px;

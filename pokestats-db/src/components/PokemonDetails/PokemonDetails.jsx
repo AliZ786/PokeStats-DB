@@ -64,7 +64,7 @@ function PokemonDetails() {
       {/* Render Pokemon details or error message */}
       {pokemonData ? (
         <div>
-          <h2>{pokemonData.name}</h2>
+          <h2 className="pokemon-name">{pokemonData.name}</h2>
           <div>
             <h3>Type(s):</h3>
             <ul>
