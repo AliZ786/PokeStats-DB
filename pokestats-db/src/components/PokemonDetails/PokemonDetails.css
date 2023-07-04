@@ -1,6 +1,14 @@
+/* HTML elements */
+
+h1 {
+  font-family: "Coiny", monospace;
+}
+
+/* Classes */
 .type-button {
-  font-family: "Times New Roman", Times, monospace;
-  background-color: yellow;
-  color: black;
+  font-family: "Coiny", sans-serif;
+  color: grey;
   border-radius: 20px;
+  font-size: 20px;
+  text-transform: uppercase;
 }
