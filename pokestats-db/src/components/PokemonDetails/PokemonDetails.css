@@ -1,7 +1,8 @@
 /* HTML elements */
 
 h1 {
-  font-family: "Coiny", monospace;
+  font-family: "Pokemon Solid", sans-serif;
+  font-weight: 300;
 }
 
 /* Classes */
@@ -9,6 +10,8 @@ h1 {
   font-family: "Coiny", sans-serif;
   color: grey;
   border-radius: 20px;
+  border: none;
   font-size: 20px;
   text-transform: uppercase;
+  margin-top: 5px;
 }
