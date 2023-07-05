@@ -41,6 +41,8 @@ function capitalizeName(name) {
 function TypesDisplay() {
   const [selectedType, setSelectedType] = useState(null);
   const [pokemonOfType, setPokemonOfType] = useState([]);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [pokemonDetails, setPokemonDetails] = useState(null);
 
   useEffect(() => {
     if (selectedType) {
@@ -60,6 +62,24 @@ function TypesDisplay() {
 
   const handleTypeClick = (type) => {
     setSelectedType(type);
+    setSelectedPokemon(null);
+    setPokemonDetails(null);
+  };
+
+  const handlePokemonClick = (pokemonName) => {
+    if (pokemonName === selectedPokemon) {
+      setSelectedPokemon(null);
+      setPokemonDetails(null);
+    } else {
+      setSelectedPokemon(pokemonName);
+      P.getPokemonByName(pokemonName)
+        .then((response) => {
+          setPokemonDetails(response);
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
+    }
   };
 
   const getButtonType = (typeName) => {
@@ -92,17 +112,45 @@ function TypesDisplay() {
               <ul>
                 {pokemonOfType.map((pokemon) => (
                   <li key={pokemon.name} className="pokemon-name">
-                    <img
-                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-                      alt={pokemon.name}
-                      className="pokemon-sprite"
-                    />
-                    <div>
-                      <span className="pokedex-number">#{pokemon.id}</span>
-                      <span className="pokemon-name-text">
-                        {capitalizeName(pokemon.name)}
-                      </span>
-                    </div>
+                    <button
+                      className={`pokemon-button ${
+                        selectedPokemon === pokemon.name ? "active" : ""
+                      }`}
+                      onClick={() => handlePokemonClick(pokemon.name)}
+                    >
+                      <img
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+                        alt={pokemon.name}
+                        className="pokemon-sprite"
+                      />
+                      <div>
+                        <span className="pokedex-number">#{pokemon.id}</span>
+                        <span className="pokemon-name-text">
+                          {capitalizeName(pokemon.name)}
+                        </span>
+                      </div>
+                    </button>
+                    {selectedPokemon === pokemon.name && pokemonDetails && (
+                      <div className="pokemon-details">
+                        <h4>{capitalizeName(selectedPokemon)} Stats:</h4>
+                        <ul>
+                          {pokemonDetails.stats.map((stat, index) => (
+                            <li key={index}>
+                              {`${stat.stat.name.toUpperCase()}: ${
+                                stat.base_stat
+                              }`}
+                            </li>
+                          ))}
+                          <p>
+                            Base Stat Total:{" "}
+                            {pokemonDetails.stats.reduce(
+                              (acc, stat) => acc + stat.base_stat,
+                              0
+                            )}
+                          </p>
+                        </ul>
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>
