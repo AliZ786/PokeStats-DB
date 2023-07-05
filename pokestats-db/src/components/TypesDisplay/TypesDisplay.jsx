@@ -141,6 +141,7 @@ function TypesDisplay() {
                               }`}
                             </li>
                           ))}
+
                           <p>
                             Base Stat Total:{" "}
                             {pokemonDetails.stats.reduce(
@@ -148,6 +149,15 @@ function TypesDisplay() {
                               0
                             )}
                           </p>
+                          {pokemonDetails.types.map((type, index) => (
+                            <li
+                              className="type-button"
+                              key={index}
+                              style={getButtonType(type.type.name)}
+                            >
+                              {type.type.name}
+                            </li>
+                          ))}
                         </ul>
                       </div>
                     )}
