@@ -52,40 +52,42 @@ function PokemonDetails() {
   };
 
   return (
-    <div>
+    <header className="header">
       <div>
-        <input
-          type="text"
-          placeholder="Enter Pokemon name"
-          value={pokemonName}
-          onChange={(e) => setPokemonName(e.target.value)}
-        />
-        <button onClick={handleSearch}>Search</button>
-      </div>
-      {/* Render Pokemon details or error message */}
-      {pokemonData ? (
         <div>
-          <h2 className="pokemon-name">{pokemonData.name}</h2>
-          <div>
-            <h3>Type(s):</h3>
-            <ul>
-              {pokemonData.types.map((type) => (
-                <li key={type.type.name}>
-                  <button
-                    className="type-button"
-                    style={getButtonType(type.type.name)}
-                  >
-                    {type.type.name}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <input
+            type="text"
+            placeholder="Enter Pokemon name"
+            value={pokemonName}
+            onChange={(e) => setPokemonName(e.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button>
         </div>
-      ) : (
-        <div>{error && <h3 className="error-message">{error}</h3>}</div>
-      )}
-    </div>
+        {/* Render Pokemon details or error message */}
+        {pokemonData ? (
+          <div>
+            <h2 className="pokemon-name">{pokemonData.name}</h2>
+            <div>
+              <h3>Type(s):</h3>
+              <ul>
+                {pokemonData.types.map((type) => (
+                  <li key={type.type.name}>
+                    <button
+                      className="type-button"
+                      style={getButtonType(type.type.name)}
+                    >
+                      {type.type.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <div>{error && <h3 className="error-message">{error}</h3>}</div>
+        )}
+      </div>
+    </header>
   );
 }
 
