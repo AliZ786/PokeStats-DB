@@ -141,7 +141,6 @@ function TypesDisplay() {
                               }`}
                             </li>
                           ))}
-
                           <p>
                             Base Stat Total:{" "}
                             {pokemonDetails.stats.reduce(
@@ -149,6 +148,7 @@ function TypesDisplay() {
                               0
                             )}
                           </p>
+                          Types:
                           {pokemonDetails.types.map((type, index) => (
                             <li
                               className="type-button"
@@ -156,6 +156,18 @@ function TypesDisplay() {
                               style={getButtonType(type.type.name)}
                             >
                               {type.type.name}
+                            </li>
+                          ))}
+                          Abilities:
+                          {pokemonDetails.abilities.map((entry, index) => (
+                            <li key={index}>
+                              {entry.is_hidden ? (
+                                <div className="hidden">
+                                  Hidden Ability: {entry.ability.name}
+                                </div>
+                              ) : (
+                                entry.ability.name
+                              )}
                             </li>
                           ))}
                         </ul>
