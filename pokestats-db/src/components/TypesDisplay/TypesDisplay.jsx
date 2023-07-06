@@ -163,13 +163,22 @@ function TypesDisplay() {
                             <li key={index}>
                               {entry.is_hidden ? (
                                 <div className="hidden">
-                                  Hidden Ability: {entry.ability.name}
+                                  Hidden Ability:{" "}
+                                  {capitalizeName(entry.ability.name)}
                                 </div>
                               ) : (
-                                entry.ability.name
+                                capitalizeName(entry.ability.name)
                               )}
                             </li>
                           ))}
+                          {pokemonDetails.species.flavor_text_entries.map(
+                            (entry, index) => {
+                              if (entry.language.name === "en") {
+                                return <li key={index}>{entry.flavor_text}</li>;
+                              }
+                              return null;
+                            }
+                          )}
                         </ul>
                       </div>
                     )}
