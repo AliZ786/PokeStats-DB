@@ -179,18 +179,17 @@ function TypesDisplay() {
                                   {capitalizeName(entry.ability.name)}
                                 </div>
                               ) : (
-                                <>
-                                  {capitalizeName(entry.ability.name)}
-                                  {pokemonDetails.pokedexEntry && (
-                                    <div className="pokedex-entry">
-                                      Pokedex Entry:{" "}
-                                      {pokemonDetails.pokedexEntry}
-                                    </div>
-                                  )}
-                                </>
+                                capitalizeName(entry.ability.name)
                               )}
                             </li>
                           ))}
+                          {pokemonDetails.pokedexEntry && (
+                            <li>
+                              <div className="pokedex-entry">
+                                Pokedex Entry: {pokemonDetails.pokedexEntry}
+                              </div>
+                            </li>
+                          )}
                         </ul>
                       </div>
                     )}
