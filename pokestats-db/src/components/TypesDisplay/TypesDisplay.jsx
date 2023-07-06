@@ -66,19 +66,30 @@ function TypesDisplay() {
     setPokemonDetails(null);
   };
 
-  const handlePokemonClick = (pokemonName) => {
+  const handlePokemonClick = async (pokemonName) => {
     if (pokemonName === selectedPokemon) {
       setSelectedPokemon(null);
       setPokemonDetails(null);
     } else {
       setSelectedPokemon(pokemonName);
-      P.getPokemonByName(pokemonName)
-        .then((response) => {
-          setPokemonDetails(response);
-        })
-        .catch((error) => {
-          console.log("Error:", error);
-        });
+      try {
+        let pokemon = await P.getPokemonByName(pokemonName);
+        let pokeSpeciesResponse = await fetch(
+          `https://pokeapi.co/api/v2/pokemon-species/${pokemonName}`
+        );
+        let pokeSpeciesData = await pokeSpeciesResponse.json();
+        let pokedexEntries = pokeSpeciesData.flavor_text_entries.filter(
+          (entry) => entry.language.name === "en"
+        );
+        let pokedexEntry =
+          pokedexEntries.length > 0 ? pokedexEntries[0].flavor_text : "";
+        pokedexEntry = pokedexEntry.replace(/[\x00-\x1F\x7F-\x9F]/g, ""); // Remove control characters
+        pokedexEntry = pokedexEntry.replace(/(\w+ ?)*$/g, "$1 $2"); // Insert space between lowercase and uppercase/digit
+
+        setPokemonDetails({ ...pokemon, pokedexEntry });
+      } catch (error) {
+        console.log("Error:", error);
+      }
     }
   };
 
@@ -167,18 +178,18 @@ function TypesDisplay() {
                                   {capitalizeName(entry.ability.name)}
                                 </div>
                               ) : (
-                                capitalizeName(entry.ability.name)
+                                <>
+                                  {capitalizeName(entry.ability.name)}
+                                  {pokemonDetails.pokedexEntry && (
+                                    <div className="pokedex-entry">
+                                      Pokedex Entry:{" "}
+                                      {pokemonDetails.pokedexEntry}
+                                    </div>
+                                  )}
+                                </>
                               )}
                             </li>
                           ))}
-                          {pokemonDetails.species.flavor_text_entries.map(
-                            (entry, index) => {
-                              if (entry.language.name === "en") {
-                                return <li key={index}>{entry.flavor_text}</li>;
-                              }
-                              return null;
-                            }
-                          )}
                         </ul>
                       </div>
                     )}
