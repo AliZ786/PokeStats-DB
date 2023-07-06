@@ -83,10 +83,11 @@ function TypesDisplay() {
         );
         let pokedexEntry =
           pokedexEntries.length > 0 ? pokedexEntries[0].flavor_text : "";
-        pokedexEntry = pokedexEntry.replace(/[\x00-\x1F\x7F-\x9F]/g, ""); // Remove control characters
-        pokedexEntry = pokedexEntry.replace(/(\w+ ?)*$/g, "$1 $2"); // Insert space between lowercase and uppercase/digit
+        pokedexEntry = pokedexEntry.replace(/^([a-zA-Z])+(\s)+[a-zA-Z]+$, " "/);
+        pokedexEntry = pokedexEntry.replace(/\f/g, " "); // Replace the problematic character with a space
 
         setPokemonDetails({ ...pokemon, pokedexEntry });
+        console.log(pokedexEntry);
       } catch (error) {
         console.log("Error:", error);
       }
