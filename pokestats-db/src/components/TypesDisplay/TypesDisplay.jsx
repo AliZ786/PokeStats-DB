@@ -86,7 +86,26 @@ function TypesDisplay() {
         pokedexEntry = pokedexEntry.replace(/^([a-zA-Z])+(\s)+[a-zA-Z]+$, " "/);
         pokedexEntry = pokedexEntry.replace(/\f/g, " "); // Replace the problematic character with a space
 
-        setPokemonDetails({ ...pokemon, pokedexEntry });
+        let pokemon_evolvesFrom = pokeSpeciesData.evolves_from_species?.name;
+        let pokemon_evolvesFromId = "";
+        if (pokemon_evolvesFrom) {
+          try {
+            let evolvesFromResponse = await fetch(
+              `https://pokeapi.co/api/v2/pokemon/${pokemon_evolvesFrom}`
+            );
+            let evolvesFromData = await evolvesFromResponse.json();
+            pokemon_evolvesFromId = evolvesFromData.id;
+          } catch (error) {
+            console.log("Error:", error);
+          }
+        }
+
+        setPokemonDetails({
+          ...pokemon,
+          pokedexEntry,
+          pokemon_evolvesFrom,
+          pokemon_evolvesFromId,
+        });
         console.log(pokedexEntry);
       } catch (error) {
         console.log("Error:", error);
@@ -187,6 +206,19 @@ function TypesDisplay() {
                             <li>
                               <div className="pokedex-entry">
                                 Pokedex Entry: {pokemonDetails.pokedexEntry}
+                              </div>
+                            </li>
+                          )}
+                          {pokemonDetails.pokemon_evolvesFrom && (
+                            <li>
+                              <div>
+                                Evolves from:{" "}
+                                {" #" +
+                                  (pokemonDetails.pokemon_evolvesFromId || "") +
+                                  " - " +
+                                  capitalizeName(
+                                    pokemonDetails.pokemon_evolvesFrom || ""
+                                  )}
                               </div>
                             </li>
                           )}
